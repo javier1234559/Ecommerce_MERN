@@ -5,6 +5,12 @@ import Product from '../models/productModel.js';
 // @route   GET /api/products
 // @access  Public
 const getProducts = asyncHandler(async (req, res) => {
+  // 1. Determine the number of products per page (e.g., 20 products).
+  // 2. Get the page number; the default is 1.
+  // 3. Search for products using a keyword. 
+  //    The keyword can be in regular expression format, and the "i" option makes it case-insensitive.
+  // 4. Count the total number of products.
+  // 5. Retrieve products based on the provided keyword with a result limit and skip (pageSize * numberOfPage)
     const pageSize = process.env.PAGINATION_LIMIT;
     const page = Number(req.query.pageNumber) || 1;
   
@@ -19,25 +25,26 @@ const getProducts = asyncHandler(async (req, res) => {
   
     const count = await Product.countDocuments({ ...keyword });
     const products = await Product.find({ ...keyword })
-      .limit(pageSize)
-      .skip(pageSize * (page - 1));
-  
-    res.json({ products, page, pages: Math.ceil(count / pageSize) });
+                                  .limit(pageSize)
+                                  .skip(pageSize * (page - 1));
+                              
+    res.json({ 
+      products,
+      page,
+      pages: Math.ceil(count / pageSize) });
   });
   
   // @desc    Fetch single product
   // @route   GET /api/products/:id
   // @access  Public
-  const getProductById = asyncHandler(async (req, res) => {
-    // NOTE: checking for valid ObjectId to prevent CastError moved to separate
-    // middleware. See README for more info.
+const getProductById = asyncHandler(async (req, res) => {
+    // 1. Check valid objectID , this case it will handle in checkObjectId middleware
+    // 2. Find product by id 
   
     const product = await Product.findById(req.params.id);
     if (product) {
       return res.json(product);
     } else {
-      // NOTE: this will run if a valid ObjectId but no product was found
-      // i.e. product may be null
       res.status(404);
       throw new Error('Product not found');
     }
@@ -47,6 +54,11 @@ const getProducts = asyncHandler(async (req, res) => {
   // @route   POST /api/products
   // @access  Private/Admin
   const createProduct = asyncHandler(async (req, res) => {
+    // 1. Check user must be authenticated at protect middleware
+    // 2. Check user is admin at admin middleware
+    // 3. Get data from req.body and create new Product object
+    // 4. Save new product
+
     const product = new Product({
       name: 'Sample name',
       price: 0,
@@ -67,8 +79,13 @@ const getProducts = asyncHandler(async (req, res) => {
   // @route   PUT /api/products/:id
   // @access  Private/Admin
   const updateProduct = asyncHandler(async (req, res) => {
-    const { name, price, description, image, brand, category, countInStock } =
-      req.body;
+    // 1. Check user must be authenticated at protect middleware
+    // 2. Check user is admin at admin middleware
+    // 3. get data from req.body
+    // 4. find product by id 
+    // 5. if exist update else throw new Error("Product not Found")
+
+    const { name, price, description, image, brand, category, countInStock } = req.body;
   
     const product = await Product.findById(req.params.id);
   
@@ -93,6 +110,9 @@ const getProducts = asyncHandler(async (req, res) => {
   // @route   DELETE /api/products/:id
   // @access  Private/Admin
   const deleteProduct = asyncHandler(async (req, res) => {
+    // 1. Check user must be authenticated at protect middleware
+    // 2. Check user is admin at admin middleware
+
     const product = await Product.findById(req.params.id);
   
     if (product) {
@@ -108,13 +128,16 @@ const getProducts = asyncHandler(async (req, res) => {
   // @route   POST /api/products/:id/reviews
   // @access  Private
   const createProductReview = asyncHandler(async (req, res) => {
+    // 1. Check user must be authenticated at protect middleware
+    // 2. Get rating , comment ,user , id from request
+    // 3. Find product by 
+
     const { rating, comment } = req.body;
-  
     const product = await Product.findById(req.params.id);
   
     if (product) {
-      const alreadyReviewed = product.reviews.find(
-        (r) => r.user.toString() === req.user._id.toString()
+      const alreadyReviewed = product.reviews.find((r) =>
+       r.user.toString() === req.user._id.toString()
       );
   
       if (alreadyReviewed) {
@@ -149,7 +172,11 @@ const getProducts = asyncHandler(async (req, res) => {
   // @route   GET /api/products/top
   // @access  Public
   const getTopProducts = asyncHandler(async (req, res) => {
-    const products = await Product.find({}).sort({ rating: -1 }).limit(3);
+    //Find top 3 product and sort with rating descending order
+
+    const products = await Product.find({})
+                                  .sort({ rating: -1 })
+                                  .limit(3);
   
     res.json(products);
   });

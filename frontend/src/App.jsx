@@ -7,7 +7,7 @@ import { Container } from 'react-bootstrap';
 import { logout } from './slices/authSlice';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+  
 function App() {
   const dispatch = useDispatch();
 
