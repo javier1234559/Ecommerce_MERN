@@ -19,8 +19,7 @@ const ProductListScreen = () => {
     pageNumber,
   });
 
-  const [deleteProduct, { isLoading: loadingDelete }] =
-    useDeleteProductMutation();
+  const [deleteProduct, { isLoading: loadingDelete }] =  useDeleteProductMutation();
 
   const deleteHandler = async (id) => {
     if (window.confirm('Are you sure')) {
@@ -33,8 +32,7 @@ const ProductListScreen = () => {
     }
   };
 
-  const [createProduct, { isLoading: loadingCreate }] =
-    useCreateProductMutation();
+  const [createProduct, { isLoading: loadingCreate }] = useCreateProductMutation();
 
   const createProductHandler = async () => {
     if (window.confirm('Are you sure you want to create a new product?')) {
