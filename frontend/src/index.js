@@ -1,8 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './assets/styles/bootstrap.min.css';
+import './assets/styles/bootstrap.custom.css';
 import './assets/styles/index.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 import App from './App';
+import reportWebVitals from './reportWebVitals';
 import {
   createBrowserRouter,
   createRoutesFromElements,
@@ -30,16 +32,18 @@ import UserEditScreen from './screens/admin/UserEditScreen';
 import store from './store';
 import { Provider } from 'react-redux';
 import { PayPalScriptProvider } from '@paypal/react-paypal-js';
-// import reportWebVitals from './reportWebVitals';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<App />}>
       <Route index={true} path='/' element={<HomeScreen />} />
-      <Route path='/product/:id' element={<ProductScreen />} />
       <Route path='/search/:keyword' element={<HomeScreen />} />
       <Route path='/page/:pageNumber' element={<HomeScreen />} />
-      <Route path='/search/:keyword/page/:pageNumber'  element={<HomeScreen />} />
+      <Route
+        path='/search/:keyword/page/:pageNumber'
+        element={<HomeScreen />}
+      />
+      <Route path='/product/:id' element={<ProductScreen />} />
       <Route path='/cart' element={<CartScreen />} />
       <Route path='/login' element={<LoginScreen />} />
       <Route path='/register' element={<RegisterScreen />} />
@@ -80,4 +84,4 @@ root.render(
   </React.StrictMode>
 );
 
-// reportWebVitals();
+reportWebVitals();

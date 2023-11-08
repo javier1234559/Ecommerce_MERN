@@ -46,7 +46,8 @@ const ProductScreen = () => {
 
   const { userInfo } = useSelector((state) => state.auth);
 
-  const [createReview, { isLoading: loadingProductReview }] = useCreateReviewMutation();
+  const [createReview, { isLoading: loadingProductReview }] =
+    useCreateReviewMutation();
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -73,7 +74,6 @@ const ProductScreen = () => {
         <Loader />
       ) : error ? (
         <Message variant='danger'>
-          {console.log(error?.error)}
           {error?.data?.message || error.error}
         </Message>
       ) : (

@@ -1,14 +1,15 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { Container } from 'react-bootstrap';
 import { Outlet } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
-import { Container } from 'react-bootstrap';
 import { logout } from './slices/authSlice';
+
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-  
-function App() {
+
+const App = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -24,18 +25,6 @@ function App() {
 
   return (
     <>
-      {/* <BrowserRouter>
-        <Header />
-        <main style={{ minHeight: "72vh" }}>
-          <Container>
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/product/:id" element={<ProductDetailPage />} />
-            </Routes>
-          </Container>
-        </main>
-        <Footer />
-      </BrowserRouter> */}
       <ToastContainer />
       <Header />
       <main className='py-3'>
@@ -46,6 +35,6 @@ function App() {
       <Footer />
     </>
   );
-}
+};
 
 export default App;

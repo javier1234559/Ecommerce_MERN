@@ -1,12 +1,12 @@
+// https://apac.danielwellington.com/products/classic-mesh-onyx-black-silver
 const products = [
     {
-      name: 'Airpods Wireless Bluetooth Headphones',
-      image: '/images/airpods.jpg',
-      description:
-        'Bluetooth technology lets you connect it with compatible devices wirelessly High-quality AAC audio offers immersive listening experience Built-in microphone allows you to take calls while working',
-      brand: 'Apple',
-      category: 'Electronics',
-      price: 89.99,
+      name: 'CLASSIC MESH ONYX',
+      image: 'https://apac.danielwellington.com/cdn/shop/products/1c35728ababa147a3221a73dd3d400550bda735e.png',
+      description: 'With the Classic Mesh Onyx, great has just become even better. Our signature timepiece gets a new dial color with a sunray finish for a sophisticated look. The mesh bracelet adds texture and brilliance to the watch, daring us to discover complexity even in a minimalist piece. Moreso, the interchangeable strap makes this watch versatile and utterly timeless. A second strap can turn your timepiece into an entirely new watch!',
+      brand: 'Daniel wellington ',
+      category: 'Watch',
+      price: 279,
       countInStock: 10,
       rating: 4.5,
       numReviews: 12,
