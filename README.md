@@ -4,6 +4,31 @@ Design database : https://dbdiagram.io/d/Ecommerce-653c890affbf5169f09f62b8
 
 Back-end to test
 ```shell
+/api/products             // GET, Fetch all products, 'Public'
+/api/products/:id         // GET, Fetch single product, 'Public'
+/api/products             // POST, Create a product, 'Private/Admin'
+/api/products/:id         // PUT, Update a product, 'Private/Admin'
+/api/products/:id         // DELETE, Delete a product, 'Private/Admin'
+/api/products/:id/reviews // POST, Create new review, 'Private'
+/api/products/top         // GET, Get top rated products, 'Public'
+
+/api/orders               // POST, Create new order, 'Private'
+/api/orders/myorders      // GET, Get logged in user orders, 'Private'
+/api/orders/:id           // GET, Get order by ID, 'Private'
+/api/orders/:id/pay       // PUT, Update order to paid, 'Private'
+/api/orders/:id/deliver   // GET, Update order to delivered, 'Private/Admin'
+/api/orders               // GET, Get all orders, 'Private/Admin'
+
+/api/users/auth           // POST, Auth user & get token, 'Public'
+/api/users                // POST, Register a new user, 'Public'
+/api/users/logout         // POST, Logout user / clear cookie, 'Public'
+/api/users/profile        // GET, Get user profile, 'Private'
+/api/users/profile        // PUT, Update user profile, 'Private'
+/api/users                // GET, Get all users, 'Private/Admin'
+/api/users/:id            // DELETE, Delete user, 'Private/Admin'
+/api/users/:id            // GET, Get user by ID, 'Private/Admin'
+/api/users/:id            // PUT, Update user, 'Private/Admin'
+
 
 const apiSummary = [
   {

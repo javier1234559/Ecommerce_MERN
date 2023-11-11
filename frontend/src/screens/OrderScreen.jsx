@@ -25,8 +25,7 @@ const OrderScreen = () => {
 
   const [payOrder, { isLoading: loadingPay }] = usePayOrderMutation();
 
-  const [deliverOrder, { isLoading: loadingDeliver }] =
-    useDeliverOrderMutation();
+  const [deliverOrder, { isLoading: loadingDeliver }] =  useDeliverOrderMutation();
 
   const { userInfo } = useSelector((state) => state.auth);
 
@@ -58,30 +57,8 @@ const OrderScreen = () => {
     }
   }, [errorPayPal, loadingPayPal, order, paypal, paypalDispatch]);
 
-  function onApprove(data, actions) {
-    return actions.order.capture().then(async function (details) {
-      try {
-        await payOrder({ orderId, details });
-        refetch();
-        toast.success('Order is paid');
-      } catch (err) {
-        toast.error(err?.data?.message || err.error);
-      }
-    });
-  }
-
-  // TESTING ONLY! REMOVE BEFORE PRODUCTION
-  // async function onApproveTest() {
-  //   await payOrder({ orderId, details: { payer: {} } });
-  //   refetch();
-
-  //   toast.success('Order is paid');
-  // }
-
-  function onError(err) {
-    toast.error(err.message);
-  }
-
+  //handle paypal script
+  //https://designcode.io/advanced-react-hooks-handbook-paypal-checkout
   function createOrder(data, actions) {
     return actions.order
       .create({
@@ -96,6 +73,24 @@ const OrderScreen = () => {
       });
   }
 
+  function onApprove(data, actions) {
+    return actions.order.capture()
+      .then(async function (details) {
+        try {
+          await payOrder({ orderId, details });
+          refetch();
+          toast.success('Order is paid');
+        } catch (err) {
+          toast.error(err?.data?.message || err.error);
+        }
+    });
+  }
+
+  function onError(err) {
+    toast.error(err.message);
+  }
+
+  //handle mark as delivered
   const deliverHandler = async () => {
     await deliverOrder(orderId);
     refetch();
@@ -219,14 +214,6 @@ const OrderScreen = () => {
                     <Loader />
                   ) : (
                     <div>
-                      {/* THIS BUTTON IS FOR TESTING! REMOVE BEFORE PRODUCTION! */}
-                      {/* <Button
-                        style={{ marginBottom: '10px' }}
-                        onClick={onApproveTest}
-                      >
-                        Test Pay Order
-                      </Button> */}
-
                       <div>
                         <PayPalButtons
                           createOrder={createOrder}

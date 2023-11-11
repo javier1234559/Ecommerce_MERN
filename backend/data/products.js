@@ -12,25 +12,34 @@ const products = [
       numReviews: 12,
     },
     {
-      name: 'iPhone 13 Pro 256GB Memory',
-      image: '/images/phone.jpg',
+      name: 'WOOL BERET',
+      image: 'https://static.zara.net/photos///2023/I/0/1/p/3739/202/802/2/w/563/3739202802_6_1_1.jpg?ts=1696250317247',
       description:
-        'Introducing the iPhone 13 Pro. A transformative triple-camera system that adds tons of capability without complexity. An unprecedented leap in battery life',
-      brand: 'Apple',
-      category: 'Electronics',
+      'Introducing the iPhone 13 Pro. A transformative triple-camera system that adds tons of capability without complexity. An unprecedented leap in battery life',
+      brand: 'ZARA',
+      category: 'HAT',
       price: 599.99,
       countInStock: 7,
       rating: 4.0,
       numReviews: 8,
     },
     {
-      name: 'Cannon EOS 80D DSLR Camera',
-      image: '/images/camera.jpg',
+      name: 'DOUBLE-STRAND NECKLACE WITH MAXI FAUX PEARLS',
+      image: 'https://static.zara.net/photos///2023/I/0/1/p/4736/261/303/2/w/563/4736261303_6_1_1.jpg?ts=1696323270114',
       description:
-        'Characterized by versatile imaging specs, the Canon EOS 80D further clarifies itself using a pair of robust focusing systems and an intuitive design',
-      brand: 'Cannon',
+      `COMPOSITION
+      We work with monitoring programmes to ensure compliance with our social, environmental and health and safety standards for our products. To assess compliance, we have developed a programme of audits and continuous improvement plans.
+      OUTER SHELL
+      91% plastic-acrylic
+      4% zinc
+      3% iron
+      2% polyester
+      CARE
+      Caring for your clothes is caring for the environment.
+      Simple steps like cleaning your clothing with a dry cotton cloth or a soft brush, depending on the characteristics of the product, can help you care for it. Whenever possible, try to use products that are respectful of the environment. `,
+      brand: 'ZAR',
       category: 'Electronics',
-      price: 929.99,
+      price: 729.99,
       countInStock: 5,
       rating: 3,
       numReviews: 12,
