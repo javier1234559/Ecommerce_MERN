@@ -18,11 +18,16 @@ export const productsApiSlice = apiSlice.injectEndpoints({
       keepUnusedDataFor: 5,
     }),
     createProduct: builder.mutation({
-      query: () => ({
+      query: (data) => ({
         url: `${PRODUCTS_URL}`,
         method: 'POST',
+        body:data
       }),
       invalidatesTags: ['Product'],
+      onMutate: async (variables) => {
+        console.log("Data before sending:", variables); // Log the data before sending
+        return variables;
+      }
     }),
     updateProduct: builder.mutation({
       query: (data) => ({

@@ -1,3 +1,4 @@
+
 main {
   min-height: 80vh;
 }
@@ -69,4 +70,38 @@ table th {
   height: 80px;
   object-fit: cover;
   object-position: center;
+}
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+/* Styling the carousel indicators */
+.carousel-indicators {
+  bottom: 15px;
+}
+
+.carousel-indicators {
+  bottom: 15px;
+}
+
+.carousel-indicators button {
+  width: 15px;
+  height: 15px;
+  margin: 0 5px;
+  border-radius: 50%;
+  background-color: #999;
+  border: none;
+  cursor: pointer;
+  outline: none;
+}
+
+.carousel-indicators .active {
+  background-color: #455360; /* Active dot color */
 }
