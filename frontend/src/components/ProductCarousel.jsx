@@ -16,7 +16,7 @@ const ProductCarousel = () => {
           <div 
           style={{ 
             height: '400px',
-            background: `url(${productimage})`,
+            background: `url(${product.image})`,
             backgroundSize: 'cover',
             backgroundPosition: 'center',
           }}
