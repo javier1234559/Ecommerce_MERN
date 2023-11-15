@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import { useLogoutMutation } from "../slices/usersApiSlice";
 import { logout } from "../slices/authSlice";
 import SearchBox from "./SearchBox";
-import logo from "../assets/logo.png";
+import logo from "../assets/logo.jpg";
 import { resetCart } from "../slices/cartSlice";
 
 const Header = () => {
@@ -43,8 +43,10 @@ const Header = () => {
         <Container>
           <LinkContainer to="/">
             <Navbar.Brand>
-              <img src={logo} alt="Accessories" />
-              Accessories
+              <img src={logo} alt="Accessories" style={
+                {width:'100px',
+                heigth:'100px'}
+              }/>
             </Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
