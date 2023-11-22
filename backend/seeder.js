@@ -2,10 +2,10 @@ import dotenv from 'dotenv';
 import colors from 'colors';
 import users from './data/users.js';
 import products from './data/products.js';
-import User from './models/userModel.js';
-import Product from './models/productModel.js';
-import Order from './models/orderModel.js';
-import connectDB from './config/database.js';
+import User from './src/models/userModel.js';
+import Product from './src/models/productModel.js';
+import Order from './src/models/orderModel.js';
+import connectDB from './src/config/database.js';
 
 dotenv.config();
 

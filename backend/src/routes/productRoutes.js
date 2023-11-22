@@ -8,9 +8,9 @@ import {
   deleteProduct,
   createProductReview,
   getTopProducts,
-} from '../../controllers/productController.js';
-import { protect, admin } from '../../middleware/authMiddleware.js';
-import checkObjectId from '../../middleware/checkObjectId.js';
+} from '../controllers/productController.js';
+import { protect, admin } from '../middleware/authMiddleware.js';
+import checkObjectId from '../middleware/checkObjectId.js';
 
 router
   .route('/')
