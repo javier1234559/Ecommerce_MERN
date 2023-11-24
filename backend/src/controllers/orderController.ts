@@ -1,19 +1,19 @@
-import asyncHandler from '../middleware/asyncHandler.js';
-import Order from '../models/orderModel.js';
-import Product from '../models/productModel.js';
-import { calcPrices } from '../utils/calcPrices.js';
-import { verifyPayPalPayment, checkIfNewTransaction } from '../utils/paypal.js';
-import { Request, Response } from 'express';
+import asyncHandler from "../middleware/asyncHandler.js";
+import Order from "../models/orderModel.js";
+import Product from "../models/productModel.js";
+import { calcPrices } from "../utils/calcPrices.js";
+import { verifyPayPalPayment, checkIfNewTransaction } from "../utils/paypal.js";
+import { Request, Response } from "express";
 
 // @desc    Create new order
 // @route   POST /api/orders
 // @access  Private
-const addOrderItems = asyncHandler(async (req :Request, res :Response ) => {
+const addOrderItems = asyncHandler(async (req: Request, res: Response) => {
   const { orderItems, shippingAddress, paymentMethod } = req.body;
 
   if (orderItems && orderItems.length === 0) {
     res.status(400);
-    throw new Error('No order items');
+    throw new Error("No order items");
   } else {
     // NOTE: here we must assume that the prices from our client are incorrect.
     // We must only trust the price of the item as it exists in
@@ -39,7 +39,8 @@ const addOrderItems = asyncHandler(async (req :Request, res :Response ) => {
     });
 
     // calculate prices
-    const { itemsPrice, taxPrice, shippingPrice, totalPrice } = calcPrices(dbOrderItems);
+    const { itemsPrice, taxPrice, shippingPrice, totalPrice } =
+      calcPrices(dbOrderItems);
 
     const order = new Order({
       orderItems: dbOrderItems,
@@ -71,15 +72,15 @@ const getMyOrders = asyncHandler(async (req, res) => {
 // @access  Private
 const getOrderById = asyncHandler(async (req, res) => {
   const order = await Order.findById(req.params.id).populate(
-    'user',
-    'name email'
+    "user",
+    "name email"
   );
 
   if (order) {
     res.json(order);
   } else {
     res.status(404);
-    throw new Error('Order not found');
+    throw new Error("Order not found");
   }
 });
 
@@ -118,7 +119,7 @@ const updateOrderToPaid = asyncHandler(async (req, res) => {
     res.json(updatedOrder);
   } else {
     res.status(404);
-    throw new Error('Order not found');
+    throw new Error("Order not found");
   }
 });
 
@@ -137,7 +138,7 @@ const updateOrderToDelivered = asyncHandler(async (req, res) => {
     res.json(updatedOrder);
   } else {
     res.status(404);
-    throw new Error('Order not found');
+    throw new Error("Order not found");
   }
 });
 
@@ -145,7 +146,7 @@ const updateOrderToDelivered = asyncHandler(async (req, res) => {
 // @route   GET /api/orders
 // @access  Private/Admin
 const getOrders = asyncHandler(async (req, res) => {
-  const orders = await Order.find({}).populate('user', 'id name');
+  const orders = await Order.find({}).populate("user", "id name");
   res.json(orders);
 });
 

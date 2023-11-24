@@ -1,5 +1,5 @@
 import path from 'path';
-import express from 'express';
+import express, { Response } from 'express';
 import multer from 'multer';
 
 const router = express.Router();
@@ -13,7 +13,7 @@ const storage = multer.diskStorage({
   },
 });
 
-function fileFilter(req, file, cb) {
+function fileFilter(req :Response, file, cb) {
   const filetypes = /jpe?g|png|webp/;
   const mimetypes = /image\/jpe?g|image\/png|image\/webp/;
 
