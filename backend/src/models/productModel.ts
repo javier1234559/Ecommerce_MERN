@@ -1,6 +1,27 @@
-import mongoose from 'mongoose';
+import mongoose, { Document, Schema } from "mongoose";
 
-const reviewSchema = mongoose.Schema(
+export interface IReview {
+  name: string;
+  rating: number;
+  comment: string;
+  user: Schema.Types.ObjectId;
+}
+
+export interface IProduct extends Document {
+  user: Schema.Types.ObjectId;
+  name: string;
+  image: string;
+  brand: string;
+  category: string;
+  description: string;
+  reviews: IReview[];
+  rating: number;
+  numReviews: number;
+  price: number;
+  countInStock: number;
+}
+
+const reviewSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
     rating: { type: Number, required: true },
@@ -8,7 +29,7 @@ const reviewSchema = mongoose.Schema(
     user: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: 'User',
+      ref: "User",
     },
   },
   {
@@ -16,12 +37,12 @@ const reviewSchema = mongoose.Schema(
   }
 );
 
-const productSchema = mongoose.Schema(
+const productSchema = new mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
-      ref: 'User',
+      ref: "User",
     },
     name: {
       type: String,
@@ -70,6 +91,6 @@ const productSchema = mongoose.Schema(
   }
 );
 
-const Product = mongoose.model('Product', productSchema);
+const Product = mongoose.model<IProduct>("Product", productSchema);
 
 export default Product;

@@ -1,11 +1,11 @@
 import dotenv from 'dotenv';
 import colors from 'colors';
-import users from './data/users.js';
-import products from './data/products.js';
-import User from './src/models/userModel.js';
-import Product from './src/models/productModel.js';
-import Order from './src/models/orderModel.js';
-import connectDB from './src/config/database.js';
+import users from './data/users';
+import products from './data/products';
+import User from './models/userModel';
+import Product from './models/productModel';
+import Order from './models/orderModel';
+import connectDB from './config/database';
 
 dotenv.config();
 

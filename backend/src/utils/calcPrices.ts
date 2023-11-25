@@ -1,3 +1,5 @@
+import { IOrderItem } from "../models/orderModel";
+
 function addDecimals(num: number) {
   return (Math.round(num * 100) / 100).toFixed(2);
 }
@@ -7,7 +9,7 @@ function addDecimals(num: number) {
 // Our addDecimals function expects a number and returns a string, so it is not
 // correct to call it passing a string as the argument.
 
-export function calcPrices(orderItems) {
+export function calcPrices(orderItems: IOrderItem[]) {
   // Calculate the items price in whole number (pennies) to avoid issues with
   // floating point number calculations
   const itemsPrice = orderItems.reduce(

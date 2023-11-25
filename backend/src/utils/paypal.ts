@@ -46,23 +46,23 @@ async function getPayPalAccessToken() {
  * @returns {Promise<boolean>} Returns true if it is a new transaction (i.e., the transaction ID does not exist in the database), false otherwise.
  * @throws {Error} If there's an error in querying the database.
  *
- */
-export async function checkIfNewTransaction(
-  orderModel,
-  paypalTransactionId: string
-) {
-  try {
-    // Find all documents where Order.paymentResult.id is the same as the id passed paypalTransactionId
-    const orders = await orderModel.find({
-      "paymentResult.id": paypalTransactionId,
-    });
+//  */
+// export async function checkIfNewTransaction(
+//   orderModel:,
+//   paypalTransactionId: string
+// ) {
+//   try {
+//     // Find all documents where Order.paymentResult.id is the same as the id passed paypalTransactionId
+//     const orders = await orderModel.find({
+//       "paymentResult.id": paypalTransactionId,
+//     });
 
-    // If there are no such orders, then it's a new transaction.
-    return orders.length === 0;
-  } catch (err) {
-    console.error(err);
-  }
-}
+//     // If there are no such orders, then it's a new transaction.
+//     return orders.length === 0;
+//   } catch (err) {
+//     console.error(err);
+//   }
+// }
 
 /**
  * Verifies a PayPal payment by making a request to the PayPal API.
@@ -73,7 +73,7 @@ export async function checkIfNewTransaction(
  * @throws {Error} If the request is not successful.
  *
  */
-export async function verifyPayPalPayment(paypalTransactionId) {
+export async function verifyPayPalPayment(paypalTransactionId: string) {
   const accessToken = await getPayPalAccessToken();
   const paypalResponse = await fetch(
     `${PAYPAL_API_URL}/v2/checkout/orders/${paypalTransactionId}`,

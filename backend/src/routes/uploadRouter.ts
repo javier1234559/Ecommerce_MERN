@@ -1,19 +1,26 @@
-import path from 'path';
-import express, { Response } from 'express';
-import multer from 'multer';
+import path from "path";
+import express, { Request, Response } from "express";
+import multer, { FileFilterCallback } from "multer";
 
 const router = express.Router();
 
 const storage = multer.diskStorage({
-  destination(req, file, cb) {
-    cb(null, 'uploads/');
+  destination(req: Request, file, cb) {
+    cb(null, "uploads/");
   },
   filename(req, file, cb) {
-    cb( null, `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}` );
+    cb(
+      null,
+      `${file.fieldname}-${Date.now()}${path.extname(file.originalname)}`
+    );
   },
 });
 
-function fileFilter(req :Response, file, cb) {
+const fileFilter = (
+  req: Request,
+  file: Express.Multer.File,
+  cb: FileFilterCallback
+) => {
   const filetypes = /jpe?g|png|webp/;
   const mimetypes = /image\/jpe?g|image\/png|image\/webp/;
 
@@ -23,24 +30,31 @@ function fileFilter(req :Response, file, cb) {
   if (extname && mimetype) {
     cb(null, true);
   } else {
-    cb(new Error('Images only!'), false);
+    throw new Error("Images only!");
   }
-}
+};
 
-const upload = multer({ storage, fileFilter });
-const uploadSingleImage = upload.single('image');
+const options = {
+  storage,
+  fileFilter,
+};
+const upload = multer(options);
+const uploadSingleImage = upload.single("image");
 
-router.post('/', (req, res) => {
-  uploadSingleImage(req, res, function (err) {
+router.post("/", (req: Request, res: Response) => {
+  uploadSingleImage(req, res, function (err: any) {
     if (err) {
       return res.status(400).send({ message: err.message });
     }
 
-    res.status(200).send({
-      message: 'Image uploaded successfully',
-      image: `/${req.file.path}`,
-    });
+    if (req.file) {
+      res.status(200).send({
+        message: "Image uploaded successfully",
+        image: `/${req.file.path}`,
+      });
+    } else {
+      res.status(400).send({ message: "File upload failed" });
+    }
   });
 });
-
 export default router;

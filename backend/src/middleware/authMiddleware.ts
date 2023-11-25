@@ -1,38 +1,54 @@
-import jwt from 'jsonwebtoken';
-import asyncHandler from './asyncHandler.js';
-import User from '../models/userModel.js';
+import jwt from "jsonwebtoken";
+import asyncHandler from "./asyncHandler.js";
+import User, { IUser } from "../models/userModel.js";
+import { Request, Response, NextFunction } from "express";
+import { IEncoded, IUserPayload } from "../types/types.js";
+
+interface JwtPayload {
+  userId: string;
+}
 
 // User must be authenticated
-const protect = asyncHandler(async (req, res, next) => {
-  // Read JWT from the 'jwt' cookie
-  
-  let token = req.cookies.jwt;
+const protect = asyncHandler(
+  async (req: Request, res: Response, next: NextFunction) => {
+    // Read JWT from the 'jwt' cookie
 
-  if (token) {
-    try {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    let token = req.cookies.jwt;
 
-      req.user = await User.findById(decoded.userId).select('-password');
+    if (token) {
+      try {
+        if (!process.env.JWT_SECRET) {
+          throw new Error(
+            "JWT_SECRET is not defined in the environment variables"
+          );
+        }
+        const decoded = jwt.verify(token, process.env.JWT_SECRET) as IEncoded;
 
-      next();
-    } catch (error) {
-      console.error(error);
+        const user: IUserPayload = await User.findById(decoded.userId).select(
+          "-password"
+        );
+        req.user = user;
+
+        next();
+      } catch (error) {
+        console.error(error);
+        res.status(401);
+        throw new Error("Not authorized, token failed");
+      }
+    } else {
       res.status(401);
-      throw new Error('Not authorized, token failed');
+      throw new Error("Not authorized, no token");
     }
-  } else {
-    res.status(401);
-    throw new Error('Not authorized, no token');
   }
-});
+);
 
 // User must be an admin
-const admin = (req, res, next) => {
+const admin = (req: Request, res: Response, next: NextFunction) => {
   if (req.user && req.user.isAdmin) {
     next();
   } else {
     res.status(401);
-    throw new Error('Not authorized as an admin');
+    throw new Error("Not authorized as an admin");
   }
 };
 

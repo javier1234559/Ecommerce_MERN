@@ -5,11 +5,11 @@ import dotenv from 'dotenv';
 dotenv.config();
 import connectDB from './config/database';
 import cookieParser from 'cookie-parser';
-import productRoutes from './routes/productRoutes.js';
-import userRoutes from './routes/userRoutes.js';
-import orderRoutes from './routes/orderRoutes.js';
-import uploadRoutes from './routes/uploadRouter.js';
-import { notFound, errorHandler } from './middleware/errorMiddleware.js';
+import productRoutes from './routes/productRoutes';
+import userRoutes from './routes/userRoutes';
+import orderRoutes from './routes/orderRoutes';
+import uploadRoutes from './routes/uploadRouter';
+import { notFound, errorHandler } from './middleware/errorMiddleware';
 
 // -------------------------------------------
 // STEP TO CREATE SERVER API
@@ -29,9 +29,6 @@ connectDB();
 const app: Express = express();
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
-
-
 app.use(cookieParser());
 // // 3. Define middleware (authen(), validate() ,...)
 
