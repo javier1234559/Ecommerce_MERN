@@ -1,3 +1,8 @@
+:root {
+  --bs-body-bg: #fff !important;
+  --bs-card-cap-bg: #eaf1f1 !important;
+  --bs-card-bg:#eaf1f1 !important;
+}
 
 main {
   min-height: 80vh;
@@ -95,7 +100,7 @@ table th {
   width: 15px;
   height: 15px;
   margin: 0 5px;
-  border-radius: 50%;
+  border-radius: 50% !important;
   background-color: #999;
   border: none;
   cursor: pointer;
@@ -105,3 +110,7 @@ table th {
 .carousel-indicators .active {
   background-color: #455360; /* Active dot color */
 }
+/* 
+.border-radus-custom {
+  border-radius: 8px;
+} */

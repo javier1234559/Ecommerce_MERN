@@ -1,10 +1,4 @@
-import {
-  Navbar,
-  Nav,
-  Container,
-  NavDropdown,
-  Badge,
-} from "react-bootstrap";
+import { Navbar, Nav, Container, NavDropdown, Badge } from "react-bootstrap";
 import { FaShoppingCart, FaUser } from "react-icons/fa";
 import { LinkContainer } from "react-router-bootstrap";
 import { useSelector, useDispatch } from "react-redux";
@@ -43,21 +37,28 @@ const Header = () => {
         <Container>
           <LinkContainer to="/">
             <Navbar.Brand>
-              <img src={logo} alt="Accessories" style={
-                {width:'100px',
-                heigth:'100px'}
-              }/>
+              <img
+                src={logo}
+                alt="Accessories"
+                style={{ width: "100px", heigth: "100px" }}
+              />
             </Navbar.Brand>
           </LinkContainer>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
-          <Navbar.Collapse id="basic-navbar-nav">
+          <Navbar.Collapse id="basic-navbar-nav" className="ml-6" style={{marginLeft:"40%"}}>
             <Nav className="ml-auto d-flex align-items-center">
               <SearchBox />
               <LinkContainer to="/cart">
                 <Nav.Link className="d-flex">
-                  <FaShoppingCart className="mr-2" /> Cart
+                  <FaShoppingCart
+                    className="mt-1 mr-2"
+                    style={{
+                      marginRight: "0.2rem",
+                    }}
+                  />
+                  <span>Cart</span>
                   {cartItems.length > 0 && (
-                    <Badge pill bg="success" style={{ marginLeft: "5px" }}>
+                    <Badge pill bg="success" style={{ margin: "5px" }}>
                       {cartItems.reduce((a, c) => a + c.qty, 0)}
                     </Badge>
                   )}

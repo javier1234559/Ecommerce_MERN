@@ -1,15 +1,18 @@
-import { useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
-import { Link } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { Row, Col, Image, ListGroup, Button, Form } from 'react-bootstrap';
-import { toast } from 'react-toastify';
-import { useGetProductDetailsQuery, useCreateReviewMutation } from '../slices/productsApiSlice';
-import Rating from '../components/Rating';
-import Loader from '../components/Loader';
-import Message from '../components/Message';
-import Meta from '../components/Meta';
-import { addToCart } from '../slices/cartSlice';
+import { useState } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Row, Col, Image, ListGroup, Button, Form } from "react-bootstrap";
+import { toast } from "react-toastify";
+import {
+  useGetProductDetailsQuery,
+  useCreateReviewMutation,
+} from "../slices/productsApiSlice";
+import Rating from "../components/Rating";
+import Loader from "../components/Loader";
+import Message from "../components/Message";
+import Meta from "../components/Meta";
+import { addToCart } from "../slices/cartSlice";
 
 const ProductScreen = () => {
   const { id: productId } = useParams();
@@ -19,18 +22,24 @@ const ProductScreen = () => {
 
   const [qty, setQty] = useState(1);
   const [rating, setRating] = useState(0);
-  const [comment, setComment] = useState('');
+  const [comment, setComment] = useState("");
 
   const addToCartHandler = () => {
     dispatch(addToCart({ ...product, qty }));
-    navigate('/cart');
+    navigate("/cart");
   };
 
-  const { data: product, isLoading, refetch, error } = useGetProductDetailsQuery(productId);
+  const {
+    data: product,
+    isLoading,
+    refetch,
+    error,
+  } = useGetProductDetailsQuery(productId);
 
   const { userInfo } = useSelector((state) => state.auth);
 
-  const [createReview, { isLoading: loadingProductReview }] = useCreateReviewMutation();
+  const [createReview, { isLoading: loadingProductReview }] =
+    useCreateReviewMutation();
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -42,7 +51,7 @@ const ProductScreen = () => {
         comment,
       }).unwrap();
       refetch();
-      toast.success('Review created successfully');
+      toast.success("Review created successfully");
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }
@@ -56,13 +65,20 @@ const ProductScreen = () => {
       {isLoading ? (
         <Loader />
       ) : error ? (
-        <Message variant="danger">{error?.data?.message || error.error}</Message>
+        <Message variant="danger">
+          {error?.data?.message || error.error}
+        </Message>
       ) : (
         <>
           <Meta title={product.name} description={product.description} />
           <Row>
             <Col md={6}>
-              <Image src={product.image} alt={product.name} fluid className="image-thumnail-detail" />
+              <Image
+                src={product.image}
+                alt={product.name}
+                fluid
+                className="image-thumnail-detail"
+              />
             </Col>
             <Col md={6}>
               <ListGroup variant="flush">
@@ -70,10 +86,15 @@ const ProductScreen = () => {
                   <h3>{product.name}</h3>
                 </ListGroup.Item>
                 <ListGroup.Item>
-                  <Rating value={product.rating} text={`${product.numReviews} reviews`} />
+                  <Rating
+                    value={product.rating}
+                    text={`${product.numReviews} reviews`}
+                  />
                 </ListGroup.Item>
                 <ListGroup.Item>Price: ${product.price}</ListGroup.Item>
-                <ListGroup.Item>Description: {product.description}</ListGroup.Item>
+                <ListGroup.Item>
+                  Description: {product.description}
+                </ListGroup.Item>
               </ListGroup>
               <ListGroup variant="flush">
                 <ListGroup.Item>
@@ -87,7 +108,9 @@ const ProductScreen = () => {
                 <ListGroup.Item>
                   <Row>
                     <Col>Status:</Col>
-                    <Col>{product.countInStock > 0 ? 'In Stock' : 'Out Of Stock'}</Col>
+                    <Col>
+                      {product.countInStock > 0 ? "In Stock" : "Out Of Stock"}
+                    </Col>
                   </Row>
                 </ListGroup.Item>
 
@@ -97,9 +120,18 @@ const ProductScreen = () => {
                     <Row>
                       <Col>Qty</Col>
                       <Col>
-                        <Form.Control as="select" value={qty} onChange={(e) => setQty(Number(e.target.value))}>
+                        <Form.Control
+                          className="border-radus-custom"
+                          as="select"
+                          value={qty}
+                          onChange={(e) => setQty(Number(e.target.value))}
+                        >
                           {[...Array(product.countInStock).keys()].map((x) => (
-                            <option key={x + 1} value={x + 1}>
+                            <option
+                              className="border-radus-custom"
+                              key={x + 1}
+                              value={x + 1}
+                            >
                               {x + 1}
                             </option>
                           ))}
@@ -111,13 +143,15 @@ const ProductScreen = () => {
 
                 <ListGroup.Item>
                   <Button
-                    className="btn-block"
+                    className="btn-block border-radus-custom"
                     type="button"
                     disabled={product.countInStock === 0}
                     onClick={addToCartHandler}
                     style={{
-                      cursor: product.countInStock === 0 ? 'not-allowed' : 'pointer',
-                    }}>
+                      cursor:
+                        product.countInStock === 0 ? "not-allowed" : "pointer",
+                    }}
+                  >
                     Add To Cart
                   </Button>
                 </ListGroup.Item>
@@ -125,7 +159,7 @@ const ProductScreen = () => {
             </Col>
           </Row>
 
-          <Row className="review">
+          <Row className="">
             <Col md={6}>
               <h2>Reviews</h2>
               {product.reviews.length === 0 && <Message>No Reviews</Message>}
@@ -147,7 +181,13 @@ const ProductScreen = () => {
                     <Form onSubmit={submitHandler}>
                       <Form.Group className="my-2" controlId="rating">
                         <Form.Label>Rating</Form.Label>
-                        <Form.Control as="select" required value={rating} onChange={(e) => setRating(e.target.value)}>
+                        <Form.Control
+                          className="border-radus-custom"
+                          as="select"
+                          required
+                          value={rating}
+                          onChange={(e) => setRating(e.target.value)}
+                        >
                           <option value="">Select...</option>
                           <option value="1">1 - Poor</option>
                           <option value="2">2 - Fair</option>
@@ -156,11 +196,23 @@ const ProductScreen = () => {
                           <option value="5">5 - Excellent</option>
                         </Form.Control>
                       </Form.Group>
-                      <Form.Group className="my-2" controlId="comment">
+                      <Form.Group className="my-2 " controlId="comment">
                         <Form.Label>Comment</Form.Label>
-                        <Form.Control as="textarea" row="3" required value={comment} onChange={(e) => setComment(e.target.value)}></Form.Control>
+                        <Form.Control
+                          className="border-radus-custom"
+                          as="textarea"
+                          row="3"
+                          required
+                          value={comment}
+                          onChange={(e) => setComment(e.target.value)}
+                        ></Form.Control>
                       </Form.Group>
-                      <Button disabled={loadingProductReview} type="submit" variant="primary">
+                      <Button
+                        disabled={loadingProductReview}
+                        type="submit"
+                        variant="primary"
+                        className="border-radus-custom"
+                      >
                         Submit
                       </Button>
                     </Form>

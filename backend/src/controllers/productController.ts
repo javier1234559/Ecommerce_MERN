@@ -20,7 +20,7 @@ class ProductController {
       ? {
           name: {
             $regex: req.query.keyword,
-            $options: "i",
+            $options: "i", //not case sensitive
           },
         }
       : {};
@@ -171,9 +171,7 @@ class ProductController {
 
       product.numReviews = product.reviews.length;
 
-      product.rating =
-        product.reviews.reduce((acc, item) => item.rating + acc, 0) /
-        product.reviews.length;
+      product.rating = product.reviews.reduce((acc, item) => item.rating + acc, 0) / product.reviews.length;
 
       await product.save();
       res.status(201).json({ message: "Review added" });
