@@ -8,8 +8,8 @@
     "dev:server": "ts-node-dev --respawn --pretty --transpile-only backend/src/server.ts",
     "client": "npm start --prefix frontend",
     "dev": "concurrently \"npm run start\" \"npm run client\"",
-    "data:import": "node backend/seeder",
-    "data:destroy": "node dist/seeder -d",
+    "data:import": "tsc && node dist/seeder.js",
+    "data:destroy": "tsc && node dist/seeder.js -d",
     "build": "npm install && npm install --prefix frontend && npm run build --prefix frontend",
     "generate-toc": "markdown-toc -i readme.md",
     "tsc": "tsc -p tsconfig.json"
