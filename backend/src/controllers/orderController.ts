@@ -2,7 +2,6 @@ import asyncHandler from "../middleware/asyncHandler.js";
 import Order, { IOrder, IOrderItem } from "../models/orderModel.js";
 import Product from "../models/productModel.js";
 import { calcPrices } from "../utils/calcPrices.js";
-import { verifyPayPalPayment } from "../utils/paypal.js";
 import { Request, Response } from "express";
 
 class OrderController {
@@ -89,23 +88,10 @@ class OrderController {
   // @route   PUT /api/orders/:id/pay
   // @access  Private
   updateOrderToPaid = asyncHandler(async (req: Request, res: Response) => {
-    // ThE VERIFY TOKEN TO CHECK IF THE PAYMENT IS VALID ISN'T WORKING
-    // NOTE: here we need to verify the payment was made to PayPal before marking
-    // the order as paid
-    // const { verified, value } = await verifyPayPalPayment(req.body.id);
-    // if (!verified) throw new Error('Payment not verified');
-
-    // // check if this transaction has been used before
-    // const isNewTransaction = await checkIfNewTransaction(Order, req.body.id);
-    // if (!isNewTransaction) throw new Error('Transaction has been used before');
 
     const order: IOrder | null = await Order.findById(req.params.id);
 
     if (order) {
-      // check the correct amount was paid
-      // const paidCorrectAmount = order.totalPrice.toString() === value;
-      // if (!paidCorrectAmount) throw new Error('Incorrect amount paid');
-
       order.isPaid = true;
       order.paidAt = new Date();
       order.paymentResult = {
@@ -152,4 +138,4 @@ class OrderController {
   });
 }
 
-export default new OrderController();
+export default OrderController;

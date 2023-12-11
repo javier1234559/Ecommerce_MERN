@@ -2,22 +2,23 @@ import express from "express";
 import UserController from "../controllers/userControlller.js";
 import { protect, admin } from "../middleware/authMiddleware.js";
 
-const router = express.Router();
+const userRoutes = express.Router();
+const userController = new UserController();
 
-router
+userRoutes
   .route("/")
-  .post(UserController.registerUser)
-  .get(protect, admin, UserController.getUsers);
-router.post("/auth", UserController.authUser);
-router.post("/logout", UserController.logoutUser);
-router
+  .post(userController.registerUser)
+  .get(protect, admin, userController.getUsers);
+userRoutes.post("/auth", userController.authUser);
+userRoutes.post("/logout", userController.logoutUser);
+userRoutes
   .route("/profile")
-  .get(protect, UserController.getUserProfile)
-  .put(protect, UserController.updateUserProfile);
-router
+  .get(protect, userController.getUserProfile)
+  .put(protect, userController.updateUserProfile);
+userRoutes
   .route("/:id")
-  .delete(protect, admin, UserController.deleteUser)
-  .get(protect, admin, UserController.getUserById)
-  .put(protect, admin, UserController.updateUser);
+  .delete(protect, admin, userController.deleteUser)
+  .get(protect, admin, userController.getUserById)
+  .put(protect, admin, userController.updateUser);
 
-export default router;
+export default userRoutes;

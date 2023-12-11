@@ -1,6 +1,8 @@
 import asyncHandler from "../middleware/asyncHandler.js";
 import Product from "../models/productModel.js";
 import { Request, Response } from "express";
+import Recommend from "../utils/recommend.js";
+import mongoose from "mongoose";
 
 class ProductController {
   // @desc    Fetch all products
@@ -171,7 +173,9 @@ class ProductController {
 
       product.numReviews = product.reviews.length;
 
-      product.rating = product.reviews.reduce((acc, item) => item.rating + acc, 0) / product.reviews.length;
+      product.rating =
+        product.reviews.reduce((acc, item) => item.rating + acc, 0) /
+        product.reviews.length;
 
       await product.save();
       res.status(201).json({ message: "Review added" });
@@ -191,6 +195,34 @@ class ProductController {
 
     res.json(products);
   });
+
+  // @desc    Get list of product recommended
+  // @route   GET /api/products/:id/recommend
+  // @access  Public
+  getListRecommendProduct = asyncHandler(
+    async (req: Request, res: Response) => {
+      res.set('Access-Control-Allow-Origin', 'http://localhost:3000');
+      const targetItemId = req.params.id;
+
+      const products = await Product.find();
+      const recommend = new Recommend(products, targetItemId);
+      const topSimilarItems = recommend.recommendItems(targetItemId);
+
+      // Convert string ObjectIDs to mongoose ObjectIDs
+      if (topSimilarItems) {
+        const objectIdsAsMongoose = topSimilarItems.map(
+          (id) => new mongoose.Types.ObjectId(id)
+        );
+        const listRecommendProducts = await Product.find({
+          _id: { $in: objectIdsAsMongoose },
+        });
+        res.json(listRecommendProducts);
+      } else {
+        res.status(404);
+        throw new Error("Recommended items not found");
+      }
+    }
+  );
 }
 
-export default new ProductController();
+export default ProductController;
