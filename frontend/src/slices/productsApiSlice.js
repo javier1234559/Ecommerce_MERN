@@ -63,6 +63,12 @@ export const productsApiSlice = apiSlice.injectEndpoints({
       query: () => `${PRODUCTS_URL}/top`,
       keepUnusedDataFor: 5,
     }),
+    getListRecommendProducts: builder.query({
+      query: (productId) => ({
+        url: `${PRODUCTS_URL}/${productId}/recommend`,
+      }),
+      // keepUnusedDataFor: 100, // Keep unused data in the cache for 100 seconds
+    }),
   }),
 });
 
@@ -75,4 +81,5 @@ export const {
   useDeleteProductMutation,
   useCreateReviewMutation,
   useGetTopProductsQuery,
+  useGetListRecommendProductsQuery,
 } = productsApiSlice;
