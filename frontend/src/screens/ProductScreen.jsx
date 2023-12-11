@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -14,9 +14,9 @@ import Message from "../components/Message";
 import Meta from "../components/Meta";
 import { addToCart } from "../slices/cartSlice";
 import Product from "../components/Product";
+import { useGetListRecommendProductsQuery } from "../slices/productsApiSlice";
 
 const ProductScreen = () => {
-  const [listRecommendItem, setListRecommendItem] = useState([]);
   const { id: productId } = useParams();
 
   const dispatch = useDispatch();
@@ -25,29 +25,7 @@ const ProductScreen = () => {
   const [qty, setQty] = useState(1);
   const [rating, setRating] = useState(0);
   const [comment, setComment] = useState("");
-
-  useEffect(() => {
-    console.log('Fetching data for productId:', productId);
-    fetchListRecommendItem(productId);
-  }, [productId]);
-
-  const fetchListRecommendItem = async (id) => {
-    try {
-      const response = await fetch(
-        `http://localhost:5000/api/products/${id}/recommend`
-      );
-      if (!response.ok) {
-        throw new Error(`Failed to fetch data with ID ${id}`);
-      }
-
-      const data = await response.json();
-      setListRecommendItem(data);
-      console.log(data);
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
-  };
+  const { userInfo } = useSelector((state) => state.auth);
 
   const addToCartHandler = () => {
     dispatch(addToCart({ ...product, qty }));
@@ -61,7 +39,11 @@ const ProductScreen = () => {
     error,
   } = useGetProductDetailsQuery(productId);
 
-  const { userInfo } = useSelector((state) => state.auth);
+  const {
+    data: listRecommendItem,
+    isLoading: isloadinglistRecommendItem,
+    error: isErrorListRecommendItem,
+  } = useGetListRecommendProductsQuery(productId);
 
   const [createReview, { isLoading: loadingProductReview }] =
     useCreateReviewMutation();
@@ -251,14 +233,24 @@ const ProductScreen = () => {
             </Col>
           </Row>
 
-          <h2>Maybe you would like</h2>
-          <Row>
-            {listRecommendItem.map((product) => (
-              <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
-                <Product product={product} />
-              </Col>
-            ))}
-          </Row>
+          {isloadinglistRecommendItem ? (
+            <Loader />
+          ) : isErrorListRecommendItem ? (
+            <Message>
+              {isErrorListRecommendItem?.data?.message || error.error}
+            </Message>
+          ) : (
+            <>
+              <h2>Maybe you would like</h2>
+              <Row>
+                {listRecommendItem.map((product) => (
+                  <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
+                    <Product product={product} />
+                  </Col>
+                ))}
+              </Row>
+            </>
+          )}
         </>
       )}
     </>

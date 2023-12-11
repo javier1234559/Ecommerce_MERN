@@ -201,7 +201,6 @@ class ProductController {
   // @access  Public
   getListRecommendProduct = asyncHandler(
     async (req: Request, res: Response) => {
-      res.set('Access-Control-Allow-Origin', 'http://localhost:3000');
       const targetItemId = req.params.id;
 
       const products = await Product.find();
@@ -216,7 +215,14 @@ class ProductController {
         const listRecommendProducts = await Product.find({
           _id: { $in: objectIdsAsMongoose },
         });
-        res.json(listRecommendProducts);
+
+        // Sort the products based on the order of topSimilarItems
+        const sortlistRecommendProducts = topSimilarItems.map((id) =>
+          listRecommendProducts.find((item) => {
+            return item._id.toString() == id;
+          })
+        );
+        res.json(sortlistRecommendProducts);
       } else {
         res.status(404);
         throw new Error("Recommended items not found");

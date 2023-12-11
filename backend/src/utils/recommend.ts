@@ -1,9 +1,5 @@
 import * as tf from "@tensorflow/tfjs-node";
 import { TfIdf, WordTokenizer } from "natural";
-import dotenv from "dotenv";
-import mongoose from "mongoose";
-
-dotenv.config();
 
 // const saveModel = async (model: tf.Sequential) => {
 //   const uploadsDir = "trained_model";
@@ -185,6 +181,7 @@ class Recommend {
         .sort((a, b) => a.similarity - b.similarity) // Sort in ascending order
         .map((entry) => entry.id)
         .slice(0, 4);
+      console.log(`List id recommend: ${sortedItems}`);
       return sortedItems;
     } else {
       console.error(`Item with ID ${targetItemId} not found.`);
