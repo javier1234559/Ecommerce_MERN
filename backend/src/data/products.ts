@@ -1,7 +1,7 @@
 // https://apac.danielwellington.com/products/classic-mesh-onyx-black-silver
 const products = [
     {
-      name: 'CLASSIC MESH ONYX',
+      name: 'WATCH CLASSIC MESH ONYX',
       image:'/image/watch.jpg',
       description: 'With the Classic Mesh Onyx, great has just become even better. Our signature timepiece gets a new dial color with a sunray finish for a sophisticated look. The mesh bracelet adds texture and brilliance to the watch, daring us to discover complexity even in a minimalist piece. Moreso, the interchangeable strap makes this watch versatile and utterly timeless. A second strap can turn your timepiece into an entirely new watch!',
       brand: 'Daniel wellington ',
@@ -34,7 +34,7 @@ const products = [
       numReviews: 0,
     },
     {
-      name: 'BACKPACK WITH FOLDOVER FLAP',
+      name: 'BALO WITH FOLDOVER FLAP',
       image:'/image/backbag.jpg',
       description: 'Backpack featuring outside pockets, top carry handle and adjustable shoulder straps. Gathered and magnetic clasp closure.',
       brand: 'ZARA',

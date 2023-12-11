@@ -4,10 +4,6 @@ import User, { IUser } from "../models/userModel.js";
 import { Request, Response, NextFunction } from "express";
 import { IEncoded, IUserPayload } from "../types/types.js";
 
-interface JwtPayload {
-  userId: string;
-}
-
 // User must be authenticated
 const protect = asyncHandler(
   async (req: Request, res: Response, next: NextFunction) => {
