@@ -5,7 +5,7 @@ export interface IOrderItem {
   qty: number;
   image: string;
   price: number;
-  product: mongoose.Types.ObjectId | string; // Adjust the type as needed
+  product: mongoose.Types.ObjectId | string; 
 }
 
 export interface IShippingAddress {
@@ -23,7 +23,7 @@ export interface IPaymentResult {
 }
 
 export interface IOrder extends Document {
-  user: mongoose.Types.ObjectId | string; // Adjust the type as needed
+  user: mongoose.Types.ObjectId | string; 
   orderItems: IOrderItem[];
   shippingAddress: IShippingAddress;
   paymentMethod: string;

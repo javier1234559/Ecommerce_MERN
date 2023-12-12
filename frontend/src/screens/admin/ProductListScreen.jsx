@@ -1,12 +1,15 @@
-import { LinkContainer } from 'react-router-bootstrap';
-import { Table, Button, Row, Col } from 'react-bootstrap';
-import { FaEdit, FaPlus, FaTrash } from 'react-icons/fa';
-import { useParams } from 'react-router-dom';
-import Message from '../../components/Message';
-import Loader from '../../components/Loader';
-import Paginate from '../../components/Paginate';
-import { useGetProductsQuery, useDeleteProductMutation, useCreateProductMutation } from '../../slices/productsApiSlice';
-import { toast } from 'react-toastify';
+import { LinkContainer } from "react-router-bootstrap";
+import { Table, Button, Row, Col } from "react-bootstrap";
+import { FaEdit, FaPlus, FaTrash } from "react-icons/fa";
+import { useParams } from "react-router-dom";
+import Message from "../../components/Message";
+import Loader from "../../components/Loader";
+import Paginate from "../../components/Paginate";
+import {
+  useGetProductsQuery,
+  useDeleteProductMutation,
+} from "../../slices/productsApiSlice";
+import { toast } from "react-toastify";
 
 const ProductListScreen = () => {
   const { pageNumber } = useParams();
@@ -15,10 +18,11 @@ const ProductListScreen = () => {
     pageNumber,
   });
 
-  const [deleteProduct, { isLoading: loadingDelete }] = useDeleteProductMutation();
+  const [deleteProduct, { isLoading: loadingDelete }] =
+    useDeleteProductMutation();
 
   const deleteHandler = async (id) => {
-    if (window.confirm('Are you sure')) {
+    if (window.confirm("Are you sure")) {
       try {
         await deleteProduct(id);
         refetch();
@@ -74,8 +78,12 @@ const ProductListScreen = () => {
                         <FaEdit />
                       </Button>
                     </LinkContainer>
-                    <Button variant="danger" className="btn-sm" onClick={() => deleteHandler(product._id)}>
-                      <FaTrash style={{ color: 'white' }} />
+                    <Button
+                      variant="danger"
+                      className="btn-sm"
+                      onClick={() => deleteHandler(product._id)}
+                    >
+                      <FaTrash style={{ color: "white" }} />
                     </Button>
                   </td>
                 </tr>

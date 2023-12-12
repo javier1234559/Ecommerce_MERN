@@ -7,7 +7,7 @@ import cookieParser from "cookie-parser";
 import productRoutes from "./routes/productRoutes";
 import userRoutes from "./routes/userRoutes";
 import orderRoutes from "./routes/orderRoutes";
-import uploadRoutes from "./routes/uploadRouter";
+import uploadRoutes from "./routes/uploadRoutes";
 import configRoutes from "./routes/configRoutes";
 import { notFound, errorHandler } from "./middleware/errorMiddleware";
 
